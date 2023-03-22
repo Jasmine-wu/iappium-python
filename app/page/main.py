@@ -5,7 +5,7 @@ from app.page.market import Market
 
 class Main(BasePage):
     # def goto_search(self):
-    #     # self.find(MobileBy.ID, "tv_search").click()
+    #     self.find(MobileBy.ID, "tv_search").click()
     #     self.steps("../step/main.yaml")
 
     def goto_market(self):
