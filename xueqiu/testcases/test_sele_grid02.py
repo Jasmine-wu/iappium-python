@@ -1,8 +1,8 @@
-#
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
-
 from selenium.webdriver import Remote
+
+
 def test_gxx():
 
     hub_url = "http://192.168.1.6:4444/wd/hub"
@@ -15,4 +15,3 @@ def test_gxx():
     for i in range(1, 5):
         drvier = Remote(hub_url, cap)
         drvier.get("http://www.baidu.com/")
-

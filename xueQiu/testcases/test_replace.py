@@ -7,7 +7,6 @@ def test_text():
     _params["company"] = "阿里巴巴"
     _params["code"] = "BABA"
 
-
     with open("../step/test_search.yaml", encoding="utf-8") as f:
         steps = yaml.safe_load(f)["search"]
     content = json.dumps(steps)
@@ -21,8 +20,8 @@ def test_text():
 
     # print(steps)
     print(content)
-        # assert "${company}" in content
-        # assert "${code}" in content
+    # assert "${company}" in content
+    # assert "${code}" in content
 
 
 # def test_1():

@@ -1,13 +1,15 @@
-from app2.testcases.utils import *
-from app2.page.app import App
+from app.testcases.utils import *
+from app.page.app import App
 import pytest
 
 
 class TestSearch():
+
     def setup(self):
         self.search = App().start().main().goto_market().goto_search()
 
-    @pytest.mark.parametrize("company, code, expect", load_data("search.yaml", "search"))
+    @pytest.mark.parametrize("company, code, expect",
+                             load_data("search.yaml", "search"))
     def test_search(self, company, code, expect):
         self.search.search(company, code)
 

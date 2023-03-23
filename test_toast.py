@@ -7,5 +7,3 @@ from appium import webdriver
         # 通过toast文本来找
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'toast文本部分内容')]").text
 """
-
-

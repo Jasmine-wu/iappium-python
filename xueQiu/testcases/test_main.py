@@ -1,5 +1,4 @@
-
-from app2.page.app import App
+from app.page.app import App
 
 
 class TestMain():

@@ -1,5 +1,6 @@
 import yaml
 
+
 def load_data(filepath: str, key=None):
     if not filepath.startswith("../data"):
         filepath = "../data/" + filepath

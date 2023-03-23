@@ -6,10 +6,8 @@ from appium.webdriver.common.touch_action import TouchAction
 from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-
 from hamcrest import *
 from hamcrest import greater_than
-
 """
     技术点：
         - 用例参数化
@@ -29,10 +27,8 @@ class Test_XueQiu():
 
     def setup_class(self):
         disired_caps = {
-
             "platformName": "android",
             "platformVersion": "6.0",
-
             "deviceName": "emulator-5554",
             "appPackage": "com.xueqiu.android",
             "appActivity": ".common.MainActivity",
@@ -48,13 +44,12 @@ class Test_XueQiu():
             "skipDeviceInitialization": "true",
             "skipServerInstallation": "true"
 
-
             # 如果想键盘输入中文，要把这两个都设置为true
             # "unicodeKeyboard": "true",
             # "resetKeyboard": "true"
-
         }
-        self.driver = webdriver.Remote("http://localhost:4723/wd/hub", disired_caps)
+        self.driver = webdriver.Remote("http://localhost:4723/wd/hub",
+                                       disired_caps)
         self.driver.implicitly_wait(5)
 
     def teardown_class(self):
@@ -68,25 +63,24 @@ class Test_XueQiu():
     def teardown(self):
         self.driver.find_element(MobileBy.XPATH, "//*[@text='取消']").click()
 
-
-    @pytest.mark.parametrize("search_name, code, expect_price", (
-            ('阿里巴巴', '09988', 220),
-            ('搜狗', 'SOGO', 8)
-
-    ))
+    @pytest.mark.parametrize("search_name, code, expect_price",
+                             (('阿里巴巴', '09988', 220), ('搜狗', 'SOGO', 8)))
     def test_search(self, search_name, code, expect_price):
         search_locator = (MobileBy.ID, "com.xueqiu.android:id/tv_search")
-        WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable(search_locator))
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.element_to_be_clickable(search_locator))
         self.driver.find_element(*search_locator).click()
 
-        self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys(search_name).click()
+        self.driver.find_element_by_id(
+            "com.xueqiu.android:id/search_input_text").send_keys(
+                search_name).click()
 
-        element_click = self.driver.find_element(MobileBy.XPATH, "//*[@text='{}']/../..".format(code))
+        element_click = self.driver.find_element(
+            MobileBy.XPATH, "//*[@text='{}']/../..".format(code))
 
         # 获取属性，可查看appium-automator2源码
         if element_click.get_attribute("clickable"):
             element_click.click()
-
         """
         MobileBy: 比By增加了移动端的东西
         from appium.webdriver.common.mobileby import MobileBy
@@ -102,30 +96,35 @@ class Test_XueQiu():
         # 找到代码09988这只股票的价格
         # 使用Xpath，通过父节点定位子元素
         locator = (
-        MobileBy.XPATH, "//*[@text='{}']/../../..//*[@resource-id='com.xueqiu.android:id/current_price']".format(code))
+            MobileBy.XPATH,
+            "//*[@text='{}']/../../..//*[@resource-id='com.xueqiu.android:id/current_price']"
+            .format(code))
 
         # 方法1：
         # WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable(locator))
         # element_price = self.driver.find_element(*locator)
 
         # 方法2：
-        element_price = WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*locator))
+        element_price = WebDriverWait(
+            self.driver, 10).until(lambda x: x.find_element(*locator))
 
         # 在expect_price 上下浮动10%
-        assert_that(float(element_price.text), close_to(expect_price, expect_price * 0.1))
-
-
+        assert_that(float(element_price.text),
+                    close_to(expect_price, expect_price * 0.1))
 
     @pytest.mark.skip
     def test_touchAction(self):
-        self.driver.find_element_by_id("com.xueqiu.android:id/tv_search").click()
-        self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys("阿里巴巴")
+        self.driver.find_element_by_id(
+            "com.xueqiu.android:id/tv_search").click()
+        self.driver.find_element_by_id(
+            "com.xueqiu.android:id/search_input_text").send_keys("阿里巴巴")
         #  touchChain
         """
             屏幕适配
         """
         price = self.driver.find_element_by_xpath(
-            "//*[@text='09988']/../../..//*[@resource-id='com.xueqiu.android:id/current_price']").text
+            "//*[@text='09988']/../../..//*[@resource-id='com.xueqiu.android:id/current_price']"
+        ).text
 
         window_rec = self.driver.get_window_rect()
 
@@ -142,6 +141,7 @@ class Test_XueQiu():
             """
             wait(200) 暂停200ms
             """
-            action.press(x=x_start, y=y_start).wait(200).move_to(x=x_start, y=y_end).release().perform()
+            action.press(x=x_start, y=y_start).wait(200).move_to(
+                x=x_start, y=y_end).release().perform()
             # 滑动手势密码
             # action.press(x=100, y=500).wait(200).move_to(x=200, y=500).wait(200).move_to(x=xx,y=xx).release().perform()

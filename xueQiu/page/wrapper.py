@@ -11,11 +11,10 @@ def handle_black(func):
     # 维护一个弹框黑名单
     def wrapper(*args, **kwargs):
 
-        from app2.page.base_page import BasePage
+        from app.page.base_page import BasePage
 
         _black_list = [
-
-            # (By.XPATH, "//*[@text='确认']"),
+            (By.XPATH, "//*[@text='确认']"),
             (By.XPATH, "//*[@text='确定']"),
             (By.XPATH, "//*[@text='下次再说']"),
         ]
@@ -28,7 +27,9 @@ def handle_black(func):
         try:
             # list 和 dic是不能直接和str拼接的, 用repr转成字符串
             # 数组切割
-            logging.info("run " + func.__name__ + "\n args: \n" + repr(args[1:]), "\n kwargs: \n" + repr(args))
+            logging.info(
+                "run " + func.__name__ + "\n args: \n" + repr(args[1:]),
+                "\n kwargs: \n" + repr(args))
 
             element = func(*args, **kwargs)
             # error清零
@@ -44,11 +45,11 @@ def handle_black(func):
             instance.screenshot("temp.png")
             with open("temp.png", "rb") as f:
                 image_content = f.read()
-            allure.attach(image_content, attachment_type=allure.attachment_type.PNG)
+            allure.attach(image_content,
+                          attachment_type=allure.attachment_type.PNG)
 
             # 发生异常时打印日志
             logging.error("element not found, handle black list")
-
 
             instance._driver.implicitly_wait(1)
 

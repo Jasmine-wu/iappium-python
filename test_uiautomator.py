@@ -9,23 +9,20 @@ class Test_UiAutomator1():
 
     def setup(self):
         disired_caps = {
-
             "platformName": "android",
             "platformVersion": "6.0",
-
             "deviceName": "emulator-5554",
             "appPackage": "com.xueqiu.android",
             "appActivity": ".common.MainActivity",
-
             "noReset": "true",
 
             # "dontStopAppOnReset": "true",
             # "skipDeviceInitialization": "true",
             # "unicodeKeyboard": "true",
             # "resetKeyboard": "true"
-
         }
-        self.driver = webdriver.Remote("http://localhost:4723/wd/hub", disired_caps)
+        self.driver = webdriver.Remote("http://localhost:4723/wd/hub",
+                                       disired_caps)
         self.driver.implicitly_wait(10)
 
     def teardown(self):
@@ -41,13 +38,14 @@ class Test_UiAutomator1():
 
         # 'new UiSelector().text("我的")' 必须是单引号
 
-        print("===============1",self.driver.context)
-        self.driver.find_element_by_android_uiautomator('new UiSelector().text("我的")').click()
+        print("===============1", self.driver.context)
+        self.driver.find_element_by_android_uiautomator(
+            'new UiSelector().text("我的")').click()
         login_locator = (MobileBy.XPATH, '//*[@text="登陆雪球"]')
-        print("===============2",self.driver.context)
+        print("===============2", self.driver.context)
 
-
-        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(login_locator))
+        WebDriverWait(self.driver, 15).until(
+            expected_conditions.visibility_of_element_located(login_locator))
         self.driver.find_element(*login_locator)
 
         # WebDriverWait(self.driver, 15).until(expected_conditions.element_to_be_clickable(login_locator))

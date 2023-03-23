@@ -1,11 +1,9 @@
 import inspect
 import json
-
 import yaml
 from appium.webdriver import WebElement
 from appium.webdriver.webdriver import WebDriver
-
-from app2.page.wrapper import handle_black
+from app.page.wrapper import handle_black
 
 
 class BasePage:
